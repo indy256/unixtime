@@ -21,27 +21,22 @@ with sync_playwright() as p:
     for value, unit, expected in cases:
         page.locator("#timestamp").fill(value)
         page.locator("#unit").select_option(unit)
-        page.locator("#timestamp-form button[type=submit]").click()
         expect(page.locator("#timestamp-result")).to_contain_text(expected)
 
     for invalid in ["invalid", "", "1.5", "999999999999999999999999999999999999"]:
         page.locator("#timestamp").fill(invalid)
-        page.locator("#timestamp-form button[type=submit]").click()
         expect(page.locator("#timestamp-error")).to_be_visible()
         expect(page.locator("#timestamp-result")).to_be_empty()
 
     page.locator("#date").fill("1970-01-01")
     page.locator("#time").fill("00:00:00")
-    page.locator("#date-form button[type=submit]").click()
     expect(page.locator("#date-result code").first).to_have_text("0")
     page.locator("#local-zone").click()
     expect(page.locator("#date-result code").first).to_have_text("-10800")
     page.locator("#utc-zone").click()
     page.locator("#date").fill("2000-02-29")
-    page.locator("#date-form button[type=submit]").click()
     expect(page.locator("#date-result code").first).to_have_text("951782400")
     page.locator("#date").fill("")
-    page.locator("#date-form button[type=submit]").click()
     expect(page.locator("#date-error")).to_be_visible()
 
     page.locator("#pause").click()
@@ -64,7 +59,6 @@ with sync_playwright() as p:
     dst.locator("#local-zone").click()
     dst.locator("#date").fill("2026-03-08")
     dst.locator("#time").fill("02:30:00")
-    dst.locator("#date-form button[type=submit]").click()
     expect(dst.locator("#date-error")).to_contain_text("does not exist")
     assert not errors, errors
     browser.close()

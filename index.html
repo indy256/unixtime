@@ -53,7 +53,6 @@
           <div class="label-row"><label for="timestamp">Unix timestamp</label><button id="use-now" type="button" class="text-button">Use current time</button></div>
           <div class="input-group"><input id="timestamp" type="text" inputmode="numeric" spellcheck="false" placeholder="e.g. 1789431294" required aria-describedby="timestamp-hint timestamp-error"><select id="unit" aria-label="Timestamp unit"><option value="auto">Auto-detect</option><option value="seconds">Seconds</option><option value="milliseconds">Milliseconds</option><option value="microseconds">Microseconds</option><option value="nanoseconds">Nanoseconds</option></select></div>
           <p class="input-hint" id="timestamp-hint">Supports seconds, milliseconds, microseconds & nanoseconds.</p>
-          <button class="button primary" type="submit">Convert to date<svg><use href="#arrow"/></svg></button>
           <p class="error" id="timestamp-error" role="alert" hidden></p>
         </form>
         <div id="timestamp-result" class="result" aria-live="polite"></div>
@@ -64,7 +63,6 @@
           <div class="label-row"><label for="date">Date & time</label><div class="timezone-toggle" aria-label="Input timezone"><button type="button" id="utc-zone" class="selected" aria-pressed="true">UTC</button><button type="button" id="local-zone" aria-pressed="false">Local time</button></div></div>
           <div class="date-inputs"><input id="date" type="date" required aria-label="Date" aria-describedby="date-error"><input id="time" type="time" step="1" required aria-label="Time" aria-describedby="date-error"></div>
           <p class="input-hint" id="zone-hint">The entered date and time are in UTC.</p>
-          <button class="button primary" type="submit">Convert to timestamp<svg><use href="#arrow"/></svg></button>
           <p class="error" id="date-error" role="alert" hidden></p>
         </form>
         <div id="date-result" class="result" aria-live="polite"></div>

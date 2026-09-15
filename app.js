@@ -139,6 +139,10 @@
   $('copy-live').addEventListener('click', () => copy($('live-timestamp').textContent));
   $('timestamp-form').addEventListener('submit', event => { event.preventDefault(); convertTimestamp(); });
   $('date-form').addEventListener('submit', event => { event.preventDefault(); convertDate(); });
+  $('timestamp').addEventListener('input', convertTimestamp);
+  $('unit').addEventListener('change', convertTimestamp);
+  $('date').addEventListener('input', convertDate);
+  $('time').addEventListener('input', convertDate);
   $('use-now').addEventListener('click', () => {
     $('timestamp').value = String(Math.floor(Date.now()/1000));
     $('unit').value = 'auto';
