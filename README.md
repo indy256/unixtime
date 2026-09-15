@@ -20,7 +20,7 @@ Then visit http://localhost:8000.
 - Copyable timestamps and live UTC, local, ISO 8601, and RFC 2822 reference formats.
 - Input validation, negative timestamps, mobile layouts, and keyboard controls.
 
-All conversion runs locally, with no external scripts, fonts, or services. Timestamp input uses integer arithmetic to avoid rounding large microsecond/nanosecond values; date display has millisecond precision. Auto-detection uses digit count; select units explicitly for historical or unusually large values. During a repeated local time at the end of daylight saving time, the earlier offset is used.
+All conversion runs locally. The page includes Google Analytics using measurement ID `G-F2E4TJR9YG`. Timestamp input uses integer arithmetic to avoid rounding large microsecond/nanosecond values; date display has millisecond precision. Auto-detection uses digit count; select units explicitly for historical or unusually large values. During a repeated local time at the end of daylight saving time, the earlier offset is used.
 
 ## Browser checks
 
