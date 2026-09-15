@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fa">
+  <meta name="description" content="Convert Unix timestamps to dates and dates to timestamps. A simple, private epoch converter that works in your browser.">
+  <title>Unix time — Timestamp converter</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%237460db'/%3E%3Ccircle cx='20' cy='20' r='12' fill='none' stroke='white' stroke-width='2'/%3E%3Cpath d='M20 12v8l5 3' fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6zM8 12l3 3 5-6"/></symbol>
+    <symbol id="copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+    <symbol id="arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18M8 15h2m4 0h2m-8 3h2"/></symbol>
+    <symbol id="code" viewBox="0 0 24 24"><path d="m7 7-5 5 5 5m10-10 5 5-5 5M14 4l-4 16"/></symbol>
+    <symbol id="globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></symbol>
+  </svg>
+  <header class="site-header">
+    <a class="brand" href="./"><span class="brand-mark"><svg><use href="#clock"/></svg></span>Unix time<span class="brand-dot">.</span></a>
+    <span class="header-note"><span class="status-dot"></span> A little tool for a matter of time</span>
+    <span class="privacy-badge"><svg><use href="#shield"/></svg>Everything stays in your browser</span>
+  </header>
+  <main>
+    <section class="intro">
+      <div class="eyebrow">SIMPLE. PRECISE. IN YOUR BROWSER.</div>
+      <h1>Make sense of <span>Unix time.</span></h1>
+      <p>Convert timestamps to readable dates, and back again.<br>Seconds, milliseconds, and everything in between.</p>
+    </section>
+    <section class="live-panel" aria-label="Current Unix timestamp">
+      <div class="live-top"><span class="section-label">THE CURRENT UNIX TIMESTAMP</span><button id="pause" class="live-badge" aria-pressed="false" title="Pause the live clock"><span class="status-dot"></span><span id="live-label">Live</span></button></div>
+      <div class="timestamp-line"><span id="live-timestamp" class="live-number">—</span><button class="icon-button" id="copy-live" aria-label="Copy current timestamp"><svg><use href="#copy"/></svg></button></div>
+      <p class="epoch-note">Seconds since January 1, 1970 · UTC</p>
+      <div class="live-date"><svg><use href="#globe"/></svg><span id="live-date">—</span></div>
+    </section>
+    <div class="converter-grid">
+      <section class="card" aria-labelledby="timestamp-heading">
+        <div class="card-heading"><span class="feature-icon"><svg><use href="#clock"/></svg></span><div><h2 id="timestamp-heading">Timestamp to date</h2><p>From a number to a moment.</p></div></div>
+        <form id="timestamp-form" novalidate>
+          <div class="label-row"><label for="timestamp">Unix timestamp</label><button id="use-now" type="button" class="text-button">Use current time</button></div>
+          <div class="input-group"><input id="timestamp" type="text" inputmode="numeric" spellcheck="false" placeholder="e.g. 1789431294" required aria-describedby="timestamp-hint timestamp-error"><select id="unit" aria-label="Timestamp unit"><option value="auto">Auto-detect</option><option value="seconds">Seconds</option><option value="milliseconds">Milliseconds</option><option value="microseconds">Microseconds</option><option value="nanoseconds">Nanoseconds</option></select></div>
+          <p class="input-hint" id="timestamp-hint">Supports seconds, milliseconds, microseconds & nanoseconds.</p>
+          <button class="button primary" type="submit">Convert to date<svg><use href="#arrow"/></svg></button>
+          <p class="error" id="timestamp-error" role="alert" hidden></p>
+        </form>
+        <div id="timestamp-result" class="result" aria-live="polite"></div>
+      </section>
+      <section class="card" aria-labelledby="date-heading">
+        <div class="card-heading"><span class="feature-icon"><svg><use href="#calendar"/></svg></span><div><h2 id="date-heading">Date to timestamp</h2><p>Give a moment its number.</p></div></div>
+        <form id="date-form" novalidate>
+          <div class="label-row"><label for="date">Date & time</label><div class="timezone-toggle" aria-label="Input timezone"><button type="button" id="utc-zone" class="selected" aria-pressed="true">UTC</button><button type="button" id="local-zone" aria-pressed="false">Local time</button></div></div>
+          <div class="date-inputs"><input id="date" type="date" required aria-label="Date" aria-describedby="date-error"><input id="time" type="time" step="1" required aria-label="Time" aria-describedby="date-error"></div>
+          <p class="input-hint" id="zone-hint">The entered date and time are in UTC.</p>
+          <button class="button primary" type="submit">Convert to timestamp<svg><use href="#arrow"/></svg></button>
+          <p class="error" id="date-error" role="alert" hidden></p>
+        </form>
+        <div id="date-result" class="result" aria-live="polite"></div>
+      </section>
+    </div>
+    <section class="card formats" aria-labelledby="formats-heading">
+      <div class="format-heading"><div><h2 id="formats-heading">One moment. Different formats.</h2><p>The current time, in the formats you use most.</p></div><span class="small-tag">QUICK REFERENCE</span></div>
+      <div id="format-rows"></div>
+    </section>
+    <section class="learn-grid">
+      <article><span class="feature-icon"><svg><use href="#code"/></svg></span><h2>What is a Unix timestamp?</h2><p>A Unix timestamp counts seconds since January 1, 1970 at 00:00:00 UTC, excluding leap seconds. It identifies the same instant everywhere, making it useful for storing and comparing dates.</p><details><summary>What about the year 2038?</summary><p>On January 19, 2038, timestamps exceed the largest signed 32-bit integer. Systems using signed 64-bit timestamps can represent dates far beyond that limit.</p></details></article>
+      <article class="units-reference"><h2>A few useful numbers</h2><dl><div><dt>1 minute</dt><dd>60 <span>seconds</span></dd></div><div><dt>1 hour</dt><dd>3,600 <span>seconds</span></dd></div><div><dt>1 day</dt><dd>86,400 <span>seconds</span></dd></div><div><dt>1 week</dt><dd>604,800 <span>seconds</span></dd></div></dl></article>
+    </section>
+    <div class="privacy-note"><svg><use href="#shield"/></svg>No uploads. No accounts. Just time.</div>
+  </main>
+  <footer class="site-footer"><span>Unix time · A simple tool for everyday development</span><a href="https://pdf-editor.indy256.com/">Need to edit a PDF?<svg><use href="#arrow"/></svg></a></footer>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>
